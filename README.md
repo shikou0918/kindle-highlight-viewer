@@ -9,6 +9,42 @@ KindleのハイライトデータをWebブラウザで閲覧・管理するア�
 - ハイライトの日時・位置情報表示
 - レスポンシブデザイン対応
 
+## 使い方
+
+### 1. Kindleからハイライトデータを取得
+
+**Kindle端末の場合:**
+1. KindleをUSBケーブルでPCに接続
+2. `documents/My Clippings.txt` ファイルをPCにコピー
+
+**Kindle for PC/Macの場合:**
+- Windowsの場合: `C:\Users\[ユーザー名]\Documents\My Kindle Content\My Clippings.txt`
+- Macの場合: `~/Library/Containers/com.amazon.Kindle/Data/Library/Application Support/Kindle/My Clippings/My Clippings.txt`
+
+### 2. アプリケーションを起動
+
+```bash
+yarn dev
+```
+
+ブラウザで `http://localhost:5173` が自動的に開きます。
+
+### 3. ファイルをアップロード
+
+1. アプリケーション画面で「ファイルを選択」ボタンをクリック
+2. 取得した `My Clippings.txt` ファイルを選択
+3. 自動的にファイルが解析され、書籍一覧が表示されます
+
+### 4. ハイライトを閲覧
+
+1. 書籍一覧から閲覧したい本をクリック
+2. その本のハイライト一覧が表示されます
+3. 各ハイライトには以下の情報が含まれます:
+   - ハイライトした文章
+   - ハイライトした日時
+   - 位置情報（ページ番号やロケーション）
+   - 追加したメモ（ある場合）
+
 ## 技術スタック
 
 - **Vue 3** - フロントエンドフレームワーク
