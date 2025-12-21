@@ -6,42 +6,44 @@
     </v-card-title>
     <v-card-text>
       <v-file-input
-        v-model="file"
+        :model-value="file ? [file] : []"
         label="ファイルを選択"
         accept=".txt"
         prepend-icon="mdi-paperclip"
         show-size
         :loading="loading"
-        :error-messages="errorMessage"
-        @change="handleFileChange"
+        :error-messages="errorMessage || undefined"
+        @update:model-value="handleFileSelect"
       />
-      <v-alert v-if="errorMessage" type="error" class="mt-4">
-        {{ errorMessage }}
-      </v-alert>
-      <v-alert v-if="successMessage" type="success" class="mt-4">
-        {{ successMessage }}
+      <v-alert v-if="hasMessage" :type="errorMessage ? 'error' : 'success'" class="mt-4">
+        {{ errorMessage || successMessage }}
       </v-alert>
     </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useHighlightStore } from '@/stores/highlightStore';
 
 const highlightStore = useHighlightStore();
 
-const file = ref<File[]>([]);
+const file = ref<File | null>(null);
 const errorMessage = ref<string>('');
 const successMessage = ref<string>('');
 const loading = ref(false);
 
-const handleFileChange = async () => {
-  if (!file.value || file.value.length === 0) {
+const hasMessage = computed(() => !!errorMessage.value || !!successMessage.value);
+
+const handleFileSelect = async (files: File[] | null) => {
+  const selectedFile = files && files.length > 0 ? files[0] : null;
+  
+  if (!selectedFile) {
+    file.value = null;
     return;
   }
 
-  const selectedFile = file.value[0];
+  file.value = selectedFile;
   errorMessage.value = '';
   successMessage.value = '';
   loading.value = true;

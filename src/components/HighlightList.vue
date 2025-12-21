@@ -13,7 +13,7 @@
     </v-card-title>
     <v-card-text>
       <v-list>
-        <v-list-item v-for="(highlight, index) in book.highlights" :key="highlight.id" class="mb-4">
+        <v-list-item v-for="highlight in book.highlights" :key="highlight.id" class="mb-4">
           <v-card variant="outlined" class="pa-4">
             <div class="text-body-1 mb-2">{{ highlight.content }}</div>
             <v-divider class="my-2" />
@@ -44,6 +44,7 @@
 
 <script setup lang="ts">
 import type { Book } from '@/types/highlight';
+import { formatDate } from '@/utils/dateFormatter';
 
 defineProps<{
   book: Book;
@@ -52,12 +53,4 @@ defineProps<{
 defineEmits<{
   back: [];
 }>();
-
-const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat('ja-JP', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date);
-};
 </script>

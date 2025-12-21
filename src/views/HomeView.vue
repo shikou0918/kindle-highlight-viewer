@@ -14,25 +14,10 @@
         <file-uploader />
       </v-col>
       <v-col cols="12" md="6">
-        <v-card class="pa-4">
-          <v-card-title class="text-h6">統計情報</v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col cols="6">
-                <div class="text-center">
-                  <div class="text-h4 text-primary">{{ highlightStore.totalBooks }}</div>
-                  <div class="text-caption text-medium-emphasis">書籍数</div>
-                </div>
-              </v-col>
-              <v-col cols="6">
-                <div class="text-center">
-                  <div class="text-h4 text-primary">{{ highlightStore.totalHighlights }}</div>
-                  <div class="text-caption text-medium-emphasis">ハイライト数</div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
+        <statistics-card
+          :total-books="highlightStore.totalBooks"
+          :total-highlights="highlightStore.totalHighlights"
+        />
       </v-col>
     </v-row>
 
@@ -56,6 +41,7 @@ import { useHighlightStore } from '@/stores/highlightStore';
 import FileUploader from '@/components/FileUploader.vue';
 import BookList from '@/components/BookList.vue';
 import HighlightList from '@/components/HighlightList.vue';
+import StatisticsCard from '@/components/StatisticsCard.vue';
 import type { Book } from '@/types/highlight';
 
 const highlightStore = useHighlightStore();

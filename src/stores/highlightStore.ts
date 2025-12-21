@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { Book, Highlight, ParsedClippings } from '@/types/highlight';
+import type { Book, Highlight } from '@/types/highlight';
 import { ClippingsParser } from '@/utils/clippingsParser';
+import { readFileAsText } from '@/utils/fileReader';
 
 export const useHighlightStore = defineStore('highlight', () => {
   const books = ref<Book[]>([]);
@@ -82,21 +83,3 @@ export const useHighlightStore = defineStore('highlight', () => {
     clearData,
   };
 });
-
-/**
- * ファイルをテキストとして読み込む
- */
-function readFileAsText(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      if (e.target?.result) {
-        resolve(e.target.result as string);
-      } else {
-        reject(new Error('ファイルの読み込みに失敗しました'));
-      }
-    };
-    reader.onerror = () => reject(new Error('ファイルの読み込みに失敗しました'));
-    reader.readAsText(file, 'UTF-8');
-  });
-}
